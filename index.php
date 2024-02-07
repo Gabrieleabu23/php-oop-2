@@ -32,14 +32,14 @@
                     try {
                     
 
-                    $prod->setDiscountPercentage(20);
+                    $prod->setDiscountPercentage(0);
 
                     $discountedPrice = $prod->applyDiscount($prod->getOriginalPrice());
 
                     echo "Prezzo originale: {$prod->getOriginalPrice()} Euro<br>";
                     echo "Prezzo scontato: {$discountedPrice} Euro";
                     } catch (Exception $e) {
-                    echo "Errore nello sconto: " . $e->getMessage();
+                    echo  $e->getMessage();
                     }
                     ?>
                     <img src="<?= htmlspecialchars($prod->getImage()) ?>" width="100" /><br>

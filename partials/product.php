@@ -85,15 +85,12 @@
     
         public function applyDiscount($price) {
             if ($this->discountPercentage < 0 || $this->discountPercentage > 100) {
-                throw new Exception("Invalid discount percentage");
+                throw new Exception("Sconto non valido!");
             }
     
             $discountAmount = ($this->discountPercentage / 100) * $price;
             $discountedPrice = $price - $discountAmount;
-    
-            if ($discountedPrice < 0) {
-                throw new Exception("Discounted price cannot be negative");
-            }
+
     
             return $discountedPrice;
         }
