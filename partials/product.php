@@ -1,17 +1,17 @@
 <?php
 
     class Product {
-
+        use DiscountTrait;
         private $id;
 
         private $title;
         private $image;
-        private $price;
+        private $originalPrice;
         
         private $category;
 
         public function __construct(
-            $id, $title, $image, $price,
+            $id, $title, $image, $originalPrice,
             Category $category
         ) {
 
@@ -19,7 +19,7 @@
             
             $this -> setTitle($title);
             $this -> setImage($image);
-            $this -> setPrice($price);
+            $this -> setPrice($originalPrice);
             
             $this -> setCategory($category);
         }
@@ -53,11 +53,11 @@
 
         public function getPrice() {
 
-            return $this -> price;
+            return $this -> originalPrice;
         }
-        public function setPrice($price) {
+        public function setPrice($originalPrice) {
 
-            $this -> price = $price;
+            $this -> originalPrice = $originalPrice;
         }
 
         public function getCategory() {
@@ -67,5 +67,34 @@
         public function setCategory(Category $category) {
 
             $this -> category = $category;
+        }
+        public function getOriginalPrice() {
+            return $this->originalPrice;
+        }
+    
+        public function setOriginalPrice($originalPrice) {
+            $this->originalPrice = $originalPrice;
+        }
+    }
+    trait DiscountTrait {
+        private $discountPercentage = 0;
+    
+        public function setDiscountPercentage($percentage) {
+            $this->discountPercentage = $percentage;
+        }
+    
+        public function applyDiscount($price) {
+            if ($this->discountPercentage < 0 || $this->discountPercentage > 100) {
+                throw new Exception("Invalid discount percentage");
+            }
+    
+            $discountAmount = ($this->discountPercentage / 100) * $price;
+            $discountedPrice = $price - $discountAmount;
+    
+            if ($discountedPrice < 0) {
+                throw new Exception("Discounted price cannot be negative");
+            }
+    
+            return $discountedPrice;
         }
     }

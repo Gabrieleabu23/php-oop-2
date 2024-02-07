@@ -21,21 +21,33 @@
         }
         ?>
 
-        <?php foreach ($productsByTypology as $typology => $products){ ?>
+        <?php foreach ($productsByTypology as $typology => $products) { ?>
             <li>
                 <h3>
                     <?= $typology ?>
                 </h3>
-                
-                    <?php foreach ($products as $prod){ ?>
-                        <li>
-                            <?= $prod->getPrice() ?> Euro<br>
-                            <img src="<?= htmlspecialchars($prod->getImage()) ?>" width="100" /><br>
-                            Category: <img src="<?= htmlspecialchars($prod->getCategory()->getIcon()) ?>" width="30" />
-                            <?= htmlspecialchars($prod->getCategory()->getName()) ?>
-                        </li>
-                    <?php } ?>
-                
+
+                <?php foreach ($products as $prod) { ?>
+                <li><?php
+                    try {
+                    
+
+                    $prod->setDiscountPercentage(20);
+
+                    $discountedPrice = $prod->applyDiscount($prod->getOriginalPrice());
+
+                    echo "Prezzo originale: {$prod->getOriginalPrice()} Euro<br>";
+                    echo "Prezzo scontato: {$discountedPrice} Euro";
+                    } catch (Exception $e) {
+                    echo "Errore nello sconto: " . $e->getMessage();
+                    }
+                    ?>
+                    <img src="<?= htmlspecialchars($prod->getImage()) ?>" width="100" /><br>
+                    Category: <img src="<?= htmlspecialchars($prod->getCategory()->getIcon()) ?>" width="30" />
+                    <?= htmlspecialchars($prod->getCategory()->getName()) ?>
+                </li>
+            <?php } ?>
+
             </li>
         <?php } ?>
     </ul>
