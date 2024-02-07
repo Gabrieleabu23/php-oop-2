@@ -24,7 +24,7 @@
         <?php foreach ($productsByTypology as $typology => $products) { ?>
             <li>
                 <h3>
-                    <?= $typology ?>
+                    <?php echo $typology ?>
                 </h3>
 
                 <?php foreach ($products as $prod) { ?>
